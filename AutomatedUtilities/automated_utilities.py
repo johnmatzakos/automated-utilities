@@ -37,9 +37,10 @@ class AutomatedUtilities:
     # removing extentions from filenames
     def removeExtentions(self, string):
         index = string.find(".")
-        output = string[:index]
-        print(f"Filename without extention: {output}")
-        return output
+        filename = string[:index]
+        filetype = string[index:]
+        print(f"Filename: {filename}, Filetype: {filetype}")
+        return filename, filetype
 
     # copy the original in order to keep it
     def copyFile(self, origin, filename):
@@ -95,5 +96,60 @@ class AutomatedUtilities:
             print("The File does not exist. Enter a valid file.")
 
     # Normalizing paths. Checking if the paths in the arguments have the required format, with a \ at the end
-    def normalizePaths(self, origin, destination):
-        print("Normalizing paths...")
+    def normalizePath(self, path):
+        if path[len(path)-1] != "\\" and "\\" in path:
+            print("Normalizing path...")
+            path = path + "\\"
+        elif path[len(path) - 1] != "/" and "/" in path:
+            print("Normalizing path...")
+            path = path + "/"
+        return path
+
+    def add_timestamp_zip_move(self):
+        self.setOrigin(self.normalizePath(input("Please enter a parent folder: ")))
+        print(f"Parameter 1: {self.getOrigin()}")
+
+        self.setDestination(self.normalizePath(input("Please enter a destination folder: ")))
+        print(f"Parameter 2: {self.getDestination()}")
+
+        self.setFilename(input("Please enter a filename: "))
+        print(f"Parameter 3: {self.getFilename()}")
+
+        # set origin  as the current working directory
+        os.chdir(self.getOrigin())
+
+        timestamp = self.getTimestamp()
+
+        origin = self.getOrigin()
+        destination = self.getDestination()
+        filename = self.getFilename()
+
+        newfile = self.copyFile(origin, filename)
+        newfile = self.removeExtentions(newfile)
+        new_filename = self.addTimestamp(origin, newfile)
+        zippedfile = self.zipFile(origin, destination, new_filename)
+        self.moveFile(zippedfile, destination)
+        self.deleteFile(new_filename, origin)
+
+    # backup files in order to keep their original state
+    def backup(self):
+        self.setOrigin(self.normalizePath(input("Please enter a parent folder: ")))
+        origin = self.getOrigin()
+        print(f"Parameter 1: {self.getOrigin()}")
+        self.setFilename(input("Please enter a filename: "))
+        filename = self.getFilename()
+        print(f"Parameter 2: {self.getFilename()}")
+
+        if os.path.isdir(origin):
+            filename, extention = self.removeExtentions(filename)
+            new_filename = filename + "_Backup" + extention
+            print(f"File renamed as: {new_filename}")
+
+            os.rename(origin + filename + extention, origin + new_filename)
+            print(f"src: {origin + filename + extention}")
+            print(f"dst: {origin + new_filename}")
+
+            return new_filename
+        else:
+            print("The directory does not exist. Enter a valid directory.")
+            return 0
