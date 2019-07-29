@@ -4,3 +4,5 @@ Automated Utilities application performs useful automations regarding file and f
 - Creates backup files
 
 This little project automates various tidious and time consuming tasks. At the same time serves as an opportunity to practice and explore python further.
+
+More utilities will be implemented over time based on various needs...
