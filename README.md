@@ -9,6 +9,7 @@ More utilities will be implemented over time based on various needs...
 
 
 How to run it
+
 Automated Utilities is desinged to run using command prompt (cmd). So in order to use the current functionalities just run the following commands from the folder where the main.exe file is located:
 - main.exe add_zip_move <source folder> <destination folder> <filename with extention>
 - main.exe backup <source folder> <destination folder> <filename with extention>
