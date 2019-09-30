@@ -1,6 +1,6 @@
 # Automated Utilities
 Automated Utilities application performs useful automations regarding file and folder management.
-- Puts a file into a zip file, adds a timestamp to its name and moves it to the necessary directory.
+- Puts a file into a zip file, adds a timestamp to its name, moves it to the necessary directory and copies the resulting filename      to clipboard.
 - Creates backup files
 
 This little project automates various tidious and time consuming tasks. At the same time serves as an opportunity to practice and explore python further.
