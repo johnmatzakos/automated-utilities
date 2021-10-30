@@ -144,3 +144,23 @@ class AutomatedUtilities:
         else:
             print("The directory does not exist. Enter a valid directory.")
             return 0
+
+    def split_file(self):
+        print("Function running: split_file")
+        origin = self.getOrigin()
+        origin = self.normalizePath(origin)
+        filename = self.getFilename()
+        if os.path.isdir(origin):
+
+            file = open(filename, 'r')
+            count = 0
+
+            # Get next line from file
+            for line in file:
+                count += 1
+                # if line is empty
+                # end of file is reached
+                if not line:
+                    break
+                # print("Line{}: {}".format(count, line.strip()))
+            file.close()
